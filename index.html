@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODOTECHO | Diseño, Construcción y Mantenimiento</title>
+    <style>
+        /* --- VARIABLES Y RESET --- */
+        :root {
+            --primary-color: #0076a8; /* Azul TodoTecho */
+            --secondary-color: #2c3e50; /* Gris oscuro */
+            --whatsapp-color: #25D366; /* Verde WhatsApp */
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --placeholder-gray: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--light-bg);
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 110px;
+        }
+
+        /* --- LOGO --- */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        .logo-container img {
+            max-height: 95px; 
+            width: auto;
+            transition: transform 0.3s;
+        }
+
+        .logo-container img:hover { transform: scale(1.02); }
+
+        /* --- NAVEGACIÓN --- */
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        /* --- HERO SECTION (BANNER PRINCIPAL) --- */
+        .hero {
+            background: linear-gradient(rgba(0,44,70,0.75), rgba(0,44,70,0.75)), url('https://lh3.googleusercontent.com/d/1i3amDa5Cqt7MkJ0QNWBhz94KOSp4rxR-');
+            background-size: cover;
+            background-position: center;
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            margin-top: 110px;
+        }
+
+        .hero-content { max-width: 800px; }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+            border: 2px solid var(--primary-color);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        /* --- SECCIONES GENERALES --- */
+        section { padding: 80px 0; }
+
+        .section-title { text-align: center; margin-bottom: 60px; }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* --- SERVICIOS --- */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .process-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        .process-card:hover { transform: translateY(-10px); }
+        .process-icon { font-size: 3rem; color: var(--primary-color); margin-bottom: 20px; }
+        .process-card h3 { margin-bottom: 15px; font-size: 1.4rem; color: var(--secondary-color); }
+        .process-card p { color: #666; }
+
+        /* ESTILOS ESPECÍFICOS PARA EL RECUADRO DE INSTALACIÓN */
+        .card-instalacion {
+            background: linear-gradient(rgba(0, 44, 70, 0.85), rgba(0, 44, 70, 0.85)), url('https://lh3.googleusercontent.com/d/16tWQ8CHmkUAQg2_bXFuRRPF8ZmTT42cb');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+        }
+        .card-instalacion h3 {
+            color: var(--white);
+        }
+        .card-instalacion p {
+            color: #e0e0e0;
+        }
+
+        /* --- PRODUCTOS --- */
+        .products { background-color: var(--white); }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+
+        /* --- ESTILOS DE IMAGEN --- */
+        .product-img {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            padding: 5px;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img { transform: scale(1.05); }
+
+        .product-info { padding: 25px; flex-grow: 1; }
+        .product-info h3 { color: var(--primary-color); margin-bottom: 10px; font-size: 1.3rem; }
+        .product-info p { font-size: 0.95rem; color: #555; margin-bottom: 15px; }
+
+        .specs-list {
+            font-size: 0.85rem;
+            color: #777;
+            margin-top: 10px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 10px;
+        }
+        
+        .specs-list li { margin-bottom: 5px; }
+        .specs-list li::before { content: "• "; color: var(--primary-color); }
+
+        /* --- CONTACTO --- */
+        .contact { background-color: var(--secondary-color); color: var(--white); }
+        .contact h2 { color: var(--white); }
+        .contact h2::after { background: var(--white); }
+        .contact p { color: #ccc; }
+
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .contact-info { flex: 1; min-width: 300px; }
+        .contact-info h3 { margin-bottom: 25px; color: var(--primary-color); }
+        
+        .info-item { display: flex; align-items: flex-start; margin-bottom: 20px; }
+        .info-icon { margin-right: 15px; font-size: 1.2rem; color: var(--primary-color); }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            color: #333;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--whatsapp-color);
+            color: var(--white);
+            border: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-submit:hover { background-color: #1ebe57; transform: translateY(-2px); }
+
+        /* Footer */
+        footer {
+            background-color: #1a252f;
+            color: #7f8c8d;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            nav { justify-content: center; } 
+            .logo-container img { max-height: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo-container">
+                    <img src="https://lh3.googleusercontent.com/d/1nGelu2Sb6Hf8SkZ0j83DaxgsJTJVzeSf" alt="TODOTECHO Logo">
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#productos">Catálogo</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Diseño, Construcción, Mantenimiento e Instalación</h1>
+            <p>Más de 15 años de experiencia formando un equipo sólido y profesional. Honradez, integridad y excelencia en cada proyecto.</p>
+            <a href="#contacto" class="btn">Solicitar Cotización</a>
+        </div>
+    </section>
+
+    <section id="servicios">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestro Proceso</h2>
+                <p>Nos encargamos de todo el ciclo de vida de tu techo y estructura.</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-icon">⚙️</div>
+                    <h3>Fabricación</h3>
+                    <p>Elaboramos materiales de la mejor calidad del mercado, a la medida exacta bajo certificación.</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-icon">🚚</div>
+                    <h3>Suministro</h3>
+                    <p>Entregamos materiales en base a tiempo establecido, observando cada detalle de tu proyecto.</p>
+                </div>
+                
+                <div class="process-card card-instalacion">
+                    <div class="process-icon">👷</div>
+                    <h3>Instalación</h3>
+                    <p>Personal profesional y capacitado para brindarte seguridad y satisfacción en una instalación de calidad.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="productos" class="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Catálogo de Productos</h2>
+                <p>Innovación y compromiso para ofrecer productos de mayor calidad, durabilidad y resistencia.</p>
+            </div>
+            
+            <div class="products-grid">
+                
+                <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/d/1RQQ5b9V7z_Sktbb9QENBMZfdwItK4dEw" alt="Panel Termoacústico">
+                    </div>
+                    <div class="product-info">
+                        <h3>Panel Termoacústico (PUR/PIR)</h3>
+                        <p>Panel sándwich para cubiertas con núcleo aislante rígido. Juntas machimbradas para total estanqueidad.</p>
+                        <ul class="specs-list">
+                            <li>Espuma rígida de poliuretano</li>
+                            <li>Aislante ecológico (Ciclopentano)</li>
+                            <li>Disminuye condensación</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/d/16yRck5-HSuCI5DaBCQhLUm5by7O3H5rt" alt="Standing Seam">
+                    </div>
+                    <div class="product-info">
+                        <h3>Standing Seam (Fijación Oculta)</h3>
+                        <p>Sistema para cubiertas y fachadas sin traslapo longitudinal. Hermeticidad comprobada y pendientes desde el 5%.</p>
+                        <ul class="specs-list">
+                            <li>Calibre 26 y 24</li>
+                            <li>Sin perforar la cubierta</li>
+                            <li>Apto para sistemas fotovoltaicos</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/d/1fdbsRWltLO4_yfy6bYABS-KEeOOBH2ek" alt="Panel Frigo">
+                    </div>
+                    <div class="product-info">
+                        <h3>Panel Frigo / Wall</h3>
+                        <p>Ideal para cuartos fríos, bodegas y plantas de procesamiento. Alta resistencia térmica y mecánica.</p>
+                        <ul class="specs-list">
+                            <li>Densidad 40kg/mts³</li>
+                            <li>Reacción al fuego B, s2, d0</li>
+                            <li>Recubrimiento grado alimenticio</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/d/1snj_19dXYgNUf-Sz-9MJNhIRygUE_qDx" alt="Panel Tipo Teja">
+                    </div>
+                    <div class="product-info">
+                        <h3>Panel Tipo Teja</h3>
+                        <p>Estética tradicional con tecnología moderna. Núcleo de espuma rígida de poliuretano.</p>
+                        <ul class="specs-list">
+                            <li>Ideal para entornos residenciales/rústicos</li>
+                            <li>Alto aislamiento térmico</li>
+                            <li>Acabado interior blanco o madera</li>
+                        </ul>
+                    </div>
+                </article>
+
+                 <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/d/1NnzFCdkaEbMYbuauqljACC5f0C1pXely" alt="Lámina Microperforada">
+                    </div>
+                    <div class="product-info">
+                        <h3>Lámina Microperforada</h3>
+                        <p>Perfil diseñado para fachadas arquitectónicas y control solar. Da privacidad y estética moderna.</p>
+                        <ul class="specs-list">
+                            <li>Material: Aluminio o Acero</li>
+                            <li>Función quiebra vista</li>
+                            <li>Fachadas ventiladas</li>
+                        </ul>
+                    </div>
+                </article>
+
+                 <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/d/1z4ce29cXQZDAI3KowMe4VkAdPCBUZqdD" alt="Policarbonato Alveolar">
+                    </div>
+                    <div class="product-info">
+                        <h3>Policarbonato Alveolar</h3>
+                        <p>Solución traslúcida que permite paso de luz pero bloquea rayos UV directos. Ahorro de energía.</p>
+                        <ul class="specs-list">
+                            <li>Alta resistencia al impacto</li>
+                            <li>Protección Anti-UV</li>
+                            <li>Peso ligero</li>
+                        </ul>
+                    </div>
+                </article>
+
+                 <article class="product-card">
+                    <div class="product-img">
+                        <img src="https://lh3.googleusercontent.com/d/1P7iWecPIveGyJKZCy4ZsRZ2BlFNgsKFu" alt="Panel Compuesto ACM">
+                    </div>
+                    <div class="product-info">
+                        <h3>Panel Compuesto ACM</h3>
+                        <p>Ideal para arquitectura e imagen corporativa. Estética moderna y dinámica para fachadas.</p>
+                        <ul class="specs-list">
+                            <li>4mm de espesor</li>
+                            <li>Adaptable a formas curvas</li>
+                            <li>Resistente a rayos UV</li>
+                        </ul>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contáctanos</h2>
+                <p>Excelente soporte técnico en el mejor tiempo posible.</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>Información Directa</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <h4>Dirección</h4>
+                            <p>Residencial Buena Vista 2 senda 3 casa 9F,<br>Santa Tecla, La Libertad.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div>
+                            <h4>Teléfonos</h4>
+                            <p>(503) 2521-8676</p>
+                            <p>(503) 7160-7692</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <div>
+                            <h4>Correo Electrónico</h4>
+                            <p>mauricio.aguila@todotecho.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">📷</div>
+                        <div>
+                            <h4>Instagram</h4>
+                            <p>@todo.techosv</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form id="whatsappForm">
+                        <h3 style="color:white; margin-bottom:15px; text-align:center;">Envíanos un mensaje rápido</h3>
+                        <div class="form-group">
+                            <input type="text" id="name" class="form-control" placeholder="Tu Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" class="form-control" placeholder="Asunto o Producto">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" class="form-control" rows="5" placeholder="¿En qué podemos ayudarte?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            <span style="font-size: 1.2rem;">💬</span> ENVIAR A WHATSAPP
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 TODOTECHO - Diseño, Construcción, Mantenimiento e Instalación.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('whatsappForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var subject = document.getElementById('subject').value;
+            var message = document.getElementById('message').value;
+            var phoneNumber = "50371607692";
+
+            var text = "*Hola TODOTECHO, quiero cotizar.*\n\n" +
+                       "👤 *Nombre:* " + name + "\n" +
+                       "📝 *Asunto:* " + subject + "\n" +
+                       "💬 *Mensaje:* " + message;
+
+            var encodedText = encodeURIComponent(text);
+            var whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + encodedText;
+
+            window.open(whatsappUrl, '_blank');
+        });
+    </script>
+
+</body>
+</html>
